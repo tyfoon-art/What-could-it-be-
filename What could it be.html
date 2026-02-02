@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise For You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #ff85a2; --bg: #ffeef2; }
+        body { font-family: 'Prompt', sans-serif; background-color: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: #4a4a4a; }
+        
+        /* ขยายขนาดหน้าจอให้ใหญ่ขึ้น */
+        .container { width: 95%; max-width: 700px; background: white; padding: 40px; border-radius: 40px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); text-align: center; min-height: 550px; display: flex; flex-direction: column; justify-content: center; }
+        
+        section { display: none; animation: fadeIn 0.5s ease; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+        /* ปุ่มและ Input */
+        .btn-main { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 30px; cursor: pointer; margin-top: 20px; font-size: 18px; font-weight: 600; transition: 0.3s; }
+        .btn-main:hover { background: #ff5e84; transform: scale(1.05); }
+        input { width: 80%; padding: 15px; border: 2px solid #ffd1dc; border-radius: 15px; text-align: center; font-size: 24px; letter-spacing: 5px; outline: none; margin: 20px 0; }
+
+        /* หน้าเมนู */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+        .menu-item { background: #fff5f7; border: 2px solid #ffdae3; padding: 35px; border-radius: 25px; cursor: pointer; transition: 0.3s; font-size: 20px; }
+        .menu-item:hover { background: #ffdae3; transform: translateY(-5px); }
+
+        /* ส่วนข้อความจดหมาย */
+        .letter-content { text-align: left; background: #fffafb; padding: 30px; border-radius: 20px; border-left: 6px solid var(--primary); line-height: 1.8; font-size: 17px; white-space: pre-line; max-height: 450px; overflow-y: auto; color: #555; }
+
+        /* วงล้อ */
+        #wheel { width: 280px; height: 280px; border: 10px solid var(--primary); border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 60px; transition: 4s cubic-bezier(0.1, 0.7, 0.1, 1); background: #fff5f7; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
+        .back-btn { margin-top: 30px; background: none; border: none; color: #aaa; cursor: pointer; text-decoration: underline; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <section id="page-cake" class="active">
+        <h1 style="color: var(--primary); font-size: 32px;">Happy Birthday Baby! 💖</h1>
+        <div style="font-size: 130px; margin: 30px; cursor: pointer;" onclick="showPage('page-login')">🎂</div>
+        <p style="font-size: 18px;">จิ้มที่เค้กเพื่อเข้าสู่หน้าถัดไปนะ</p>
+    </section>
+
+    <section id="page-login">
+        <h3>กรุณากรอกรหัสผ่านค่ะ</h3>
+        <input type="password" id="passcode" placeholder="____" maxlength="4">
+        <br>
+        <button class="btn-main" onclick="checkPass()">เข้าสู่ระบบ ✨</button>
+    </section>
+
+    <section id="page-menu">
+        <h2 style="color: var(--primary);">ยินดีต้อนรับนะคะคนน่ารัก ✨</h2>
+        <div class="menu-grid">
+            <div class="menu-item" onclick="showPage('page-timer')">⏱️<br><small>เวลาที่คบกัน</small></div>
+            <div class="menu-item" onclick="showPage('page-letter')">💌<br><small>จดหมายรัก</small></div>
+            <div class="menu-item" onclick="showPage('page-music')">🎵<br><small>เพลงของเธอ</small></div>
+            <div class="menu-item" onclick="showPage('page-spin')">🎡<br><small>สุ่มรางวัล</small></div>
+        </div>
+    </section>
+
+    <section id="page-timer">
+        <h3>เราเดินทางร่วมกันมา...</h3>
+        <div style="font-size: 36px; color: var(--primary); font-weight: 600; margin: 30px 0; background: #fff5f7; padding: 30px; border-radius: 25px;">
+            <span id="d">191</span> วัน <span id="h">7</span> ชม. <br>
+            <span id="m">19</span> นาที <span id="s">0</span> วิ
+        </div>
+        <button class="back-btn" onclick="showPage('page-menu')">กลับหน้าหลัก</button>
+    </section>
+
+    <section id="page-letter">
+        <div class="letter-content">
+            สุขสันต์วันเกิดนะคะคนเก่งของเค้า🎂
+            วันนี้เป็นอีกหนึ่งวันที่เค้าอยากบอกเธอให้รู้ว่า
+            การมีเธออยู่ในชีวิต เป็นเรื่องที่ดีมากๆ สำหรับเค้า
+
+            ถึงที่ผ่านมาเค้าอาจจะเอาแต่ใจไปบ้าง ขี้น้อยใจไปบ้าง
+            มีบางครั้งที่ทำให้เธอต้องเหนื่อยหรือไม่สบายใจ
+            เค้าขอโทษจริงๆนะและขอบคุณมากๆที่เธยังอยู่ตรงนี้เสมอ
+
+            วันนี้เค้าอาจไม่มีเค้กไม่มีของขวัญอะไรเป็นชิ้นเป็นอัน
+            แต่สิ่งที่เค้ามีและอยากมอบให้เธอที่สุด
+            คือหัวใจของเค้าทั้งหมดเลย
+
+            เค้าไม่รู้ว่ามันจะทดแทนอะไรได้มากแค่ไหน
+            แต่เค้าอยากให้เธอรู้ว่าทุกความห่วงใยทุกความตั้งใจ
+            เค้าให้เธอจากใจจริง
+
+            เค้าอยากมีเธออยู่ข้างๆ
+            ในทุกวันธรรมดา วันที่เหนื่อย วันที่ท้อ
+            และในวันที่เรายิ้มไปด้วยกัน
+            อยากเดินไปข้างๆเธอแบบนี้ให้นานที่สุดเท่าที่จะทำได้
+
+            ขอบคุณที่เกิดมาและขอบคุณที่เข้ามาเป็นคนสำคัญของเค้านะ
+            รักเธอมากๆและขอให้ปีนี้เป็นปีที่ดีของเธอ🤍
+        </div>
+        <button class="back-btn" onclick="showPage('page-menu')">กลับหน้าหลัก</button>
+    </section>
+
+    <section id="page-music">
+        <h3>เพลงที่อยากให้เธอฟังในวันนี้ 🎧</h3>
+        <div style="margin: 40px;">
+            <p style="margin-bottom: 25px;">"เพราะเธอคือคนพิเศษสำหรับเค้าเสมอ"</p>
+            <a href="https://youtu.be/0oY2tXScYsc?si=1rw_nG-uEiGUhaL3" target="_blank" class="btn-main" style="text-decoration: none; display: inline-block;">กดเพื่อฟังเพลง 🎵</a>
+        </div>
+        <button class="back-btn" onclick="showPage('page-menu')">กลับหน้าหลัก</button>
+    </section>
+
+    <section id="page-spin">
+        <h3>สุ่มรางวัลพิเศษจากเค้าเอง 🎁</h3>
+        <div id="wheel">🎁</div>
+        <button class="btn-main" id="spin-btn" onclick="spinNow()">เริ่มหมุนวงล้อ!</button>
+        <br>
+        <button class="back-btn" onclick="showPage('page-menu')">กลับหน้าหลัก</button>
+    </section>
+</div>
+
+<script>
+    // --- ตั้งค่ารหัสผ่านที่นี่ ---
+    const correctPass = "0802"; // เปลี่ยนเป็น วว ดด วันเกิดของแฟนคุณ
+    
+    // --- ตั้งค่าเวลาเริ่มต้น 191 วัน 7 ชม. 19 นาที ---
+    let initialDiff = (191 * 24 * 60 * 60 * 1000) + (7 * 60 * 60 * 1000) + (37 * 60 * 1000);
+    let startTime = Date.now();
+
+    function showPage(pageId) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        if(pageId === 'page-timer') startCounter();
+    }
+
+    function checkPass() {
+        const inputVal = document.getElementById('passcode').value;
+        if(inputVal === correctPass) {
+            showPage('page-menu');
+        } else {
+            alert("รหัสผ่านไม่ถูกต้อง ต้องลองใหม่อีกครั้งแล้วล่ะ!");
+        }
+    }
+
+    function startCounter() {
+        setInterval(() => {
+            let now = Date.now();
+            let totalDiff = initialDiff + (now - startTime);
+            document.getElementById('d').innerText = Math.floor(totalDiff / (1000 * 60 * 60 * 24));
+            document.getElementById('h').innerText = Math.floor((totalDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('m').innerText = Math.floor((totalDiff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('s').innerText = Math.floor((totalDiff % (1000 * 60)) / 1000);
+        }, 1000);
+    }
+
+    function spinNow() {
+        // รายการรางวัลตามที่คุณระบุ
+        const prizes = [
+            "เลี้ยงข้าว 1 มื้อ🍛", 
+            "ตั๋วหนังฟรี🎬", 
+            "เธอต้องเลี้ยงขนมเค้า🍰", 
+            "ตามใจเธอทั้งวันเลย✨", 
+            "เลี้ยงของกินเธอ😋"
+        ];
+        
+        const wheel = document.getElementById('wheel');
+        const spinBtn = document.getElementById('spin-btn');
+        
+        spinBtn.disabled = true;
+        wheel.innerText = "🌀"; // เปลี่ยนเป็นสัญลักษณ์หมุน
+        wheel.style.transform = "rotate(1800deg)"; // หมุน 5 รอบ
+        
+        setTimeout(() => {
+            const randomIndex = Math.floor(Math.random() * prizes.length);
+            const result = prizes[randomIndex];
+            wheel.innerText = "⭐"; // เมื่อหยุดหมุน
+            wheel.style.transform = "rotate(0deg)";
+            alert("ยินดีด้วยค่ะ! รางวัลที่คุณได้รับคือ: \n\n" + result);
+            spinBtn.disabled = false;
+        }, 4000);
+    }
+</script>
+
+</body>
+</html>
